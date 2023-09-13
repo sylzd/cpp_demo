@@ -17,6 +17,11 @@
 
 #include "cpplang.hpp"
 #include <string>
+#include <msgpack.hpp> // brew install msgpack-cxx
+
+#if MSGPACK_VERSION_MAJOR < 2
+#   error "msgpack version is too old"
+#endif
 
 namespace cpp_study {
 
@@ -52,18 +57,45 @@ private: // 用private 分离构造与业务逻辑
     string_t m_id = ""; // 成员变量初始化 initialize the member variable
     uint_t m_sold = 0;
     uint_t m_revenue = 0;
+
 public:
     void inc_sold(uint_t s) noexcept {
         m_sold += s;
+    }
+    void inc_revenue(currency_t r) noexcept {
+        m_revenue += r;
     }
 public:
     string_view_t id() const noexcept { // 常函数，不抛异常
         return m_id;
     }
-
     uint_t sold() const noexcept { // 常函数，不抛异常
         return m_sold;
     }
+    currency_t revenue() const noexcept { // 常函数，不抛异常
+        return m_revenue;
+    }
+    currency_t avg_price() const noexcept { // 常函数，不抛异常
+        return m_sold ? m_revenue / m_sold : 0;
+    }
+
+public: // 序列化放在这里一定程度上影响了单一职责，可能会增加该类的复杂度，要权衡考虑
+    MSGPACK_DEFINE(m_id, m_sold, m_revenue); // msgpack序列化
+
+    msgpack::sbuffer pack() const {
+        msgpack::sbuffer buf;
+        msgpack::pack(buf, *this); // this指针指当前对象，自动创建，但一般用成员函数时不需要用this
+        return buf;
+    }
+
+    SalesData(const msgpack::sbuffer& buf) {
+        msgpack::object_handle oh = msgpack::unpack(buf.data(), buf.size());
+        msgpack::object obj = oh.get();
+        obj.convert(*this);
+    }
+
+public:
+
 };
 
 }
