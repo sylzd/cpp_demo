@@ -19,7 +19,7 @@
 
 #include <atomic>
 
-# endif
+# endif //_CPP_LANG_HPP
 
 //must be C++ or later
 #if __cplusplus < 201103

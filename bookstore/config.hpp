@@ -71,7 +71,7 @@ public:
 
         auto v = getGlobal(m_vm.get(), w1.c_str());
 
-        return LuaRef_cast<T>(v[w2.c_str()]);
+        return LuaRef_cast<T>(v[w2]);
     }
 
 };

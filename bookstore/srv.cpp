@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// g++ srv.cpp -std=c++14 -I./LuaBridge/Source -I/usr/local/include/luajit-2.1 -lluajit-5.1 -ldl -lzmq -lpthread -lcurl -g -O0 -o a.out;./a.out
+// g++ srv.cpp -std=c++14 -I./LuaBridge/Source -I/usr/local/include/luajit-2.1 -lluajit-5.1 -ldl -lzmq -lpthread -lcurl -g -O0 -o bookstore_server;./bookstore_server
 
 // 写完hpp，准备好各个对象之后，就开始组合，做成一个完整的程序
 #include <future>
@@ -40,10 +40,11 @@ static auto debug_print = [](SalesData& b) {
 
 int main() {
 try {
-    cout << "Hello, C++ Study Server!" << endl;
+    cout << "Hello, I am a Book Store Server!" << endl;
     
     Config conf;
     conf.load("conf.lua");
+    cout << conf.get<string>("config.zmq_ipc_addr") << endl;
 
     Summary sum;
     std::atomic_int count{0};
@@ -58,7 +59,7 @@ try {
 
         while (true) {
             auto msg_ptr = std::make_shared<zmq_message_t>(); // msg自动指针
-
+            cout << "wait message" << endl;
             sock.recv(msg_ptr.get()); // ZMQ 阻塞式接收数据
 
             ++count; // 原子计数+1

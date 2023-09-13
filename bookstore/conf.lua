@@ -19,11 +19,11 @@
 config = {
     -- should be same as client
     -- you could change it to ipc    
-    zmq_ipc = "tcp://127.0.0.1:5555",
+    zmq_ipc_addr = "tcp://127.0.0.1:5555",
 
     -- see http_study's lu code
     http_addr = "http://localhost/cpp_study?token=test",
-    time_internal = 5, -- seconds
+    time_interval = 5, -- seconds
     keyword = "super",
     sold_criteria = 100,
     revenue_criteria = 1000,
