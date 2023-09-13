@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// g++ srv.cpp -std=c++14 -I./LuaBridge/Source -I/usr/local/include/luajit-2.1 -lluajit-5.1 -ldl -lzmq -lpthread -lcurl -g -O0 -o a.out;./a.out
+
 // 写完hpp，准备好各个对象之后，就开始组合，做成一个完整的程序
 #include <future>
 
@@ -94,6 +96,8 @@ try {
 
     // launch recv_cycle then wait
     auto t2 = std::async(std::launch::async, recv_cycle);
+
+    t2.wait();
 } // try
 
 catch(std::exception& e) {
