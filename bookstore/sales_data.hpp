@@ -56,7 +56,8 @@ public:
 private: // 用private 分离构造与业务逻辑
     string_t m_id = ""; // 成员变量初始化 initialize the member variable
     uint_t m_sold = 0;
-    uint_t m_revenue = 0;
+    // 这里用double表示货币，由于精度问题，工业上不这样用
+    currency_t m_revenue = 0;
 
 public:
     void inc_sold(uint_t s) noexcept {

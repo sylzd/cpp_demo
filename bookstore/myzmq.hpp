@@ -45,7 +45,7 @@ public:
 
         return sock;
     }
-    static zmq_socket_t send_soc(int hwm = 1000, int linger = 10) {
+    static zmq_socket_t send_sock(int hwm = 1000, int linger = 10) {
         zmq_socket_t sock(context(), ZMQ_PUSH);
         sock.setsockopt(ZMQ_SNDHWM, hwm);
         sock.setsockopt(ZMQ_LINGER, linger); // wait for 10ms

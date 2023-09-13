@@ -13,3 +13,32 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
+
+## 运行方式一 ： 手动编译
+1. Server：先启动server常驻进程
+编译命令如下：
+```
+rm -f ./bookstore_server; g++ server.cpp -std=c++14 -I./LuaBridge/Source -I/usr/local/include/luajit-2.1 -lluajit-5.1 -ldl -lzmq -lpthread -lcurl -g -O0 -o bookstore_server;./bookstore_server
+```
+
+2. Client
+再启动client，买几本书，观察server端输出
+编译命令如下：
+```
+
+```
+
+3. 观察Server日志
+```
+TODO，结果还有点问题，可能是msgpack这里的问题，需要调试下
+```
+
+## 运行方式二 ： CMake编译
+```
+rm -rf CMakeFiles # 可以有更好的clean方式
+cmake .
+make
+# 生成server和client两个二进制，分别执行
+./server
+./client
+```
