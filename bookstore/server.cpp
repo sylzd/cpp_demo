@@ -52,7 +52,8 @@ try {
 
     //TODO: try-catch
     auto recv_cycle = [&]() {  // 主循环lambda,捕获所有变量
-        using zmq_ctx = ZMQContext<1>; // 单线程接收客户端消息
+        //  每次循环都会创建一个新的线程，实际中会用线程池
+        using zmq_ctx = ZMQContext<1>;
         auto sock = zmq_ctx::recv_sock(); // 自动类型推导，获取接收socket
 
         sock.bind(conf.get<string>("config.zmq_ipc_addr")); // 绑定zmq端口
@@ -95,7 +96,7 @@ try {
     }; // log_cycle lambda
 
     // launch log_cycle
-    auto t1 = std::async(std::launch::async, log_cycle); // include future
+    //auto t1 = std::async(std::launch::async, log_cycle); // include future
 
     // launch recv_cycle then wait
     auto t2 = std::async(std::launch::async, recv_cycle);

@@ -35,10 +35,8 @@ TODO，结果还有点问题，可能是msgpack这里的问题，需要调试下
 
 ## 运行方式二 ： CMake编译
 ```
-rm -rf CMakeFiles # 可以有更好的clean方式
-cmake .
-make
+mkdir -p ${workspaceFolder}/bookstore/build && rm -rf ${workspaceFolder}/bookstore/build/* && cd ${workspaceFolder}/bookstore/build && cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
 # 生成server和client两个二进制，分别执行
-./server
-./client
+./build/server
+./build/client
 ```
