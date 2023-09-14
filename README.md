@@ -1,3 +1,3 @@
-cpp_test
+# cpp_study
 
-Source:  https://github.com/chronolaw/cpp_study
+BookStore Source:  https://github.com/chronolaw/cpp_study
